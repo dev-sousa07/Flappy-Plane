@@ -9,9 +9,12 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float velocidade = 5f;
     // Start is called before the first frame update
+
+    //Puff
+    [SerializeField] private GameObject puff;
     void Start()
     {
-        //Pegando o rb
+        //Pegando o rb  
        rb = GetComponent<Rigidbody2D>();
     }
 
@@ -23,6 +26,11 @@ public class PlayerController : MonoBehaviour
 
         // Chamando método limitando
         Limitando();
+
+        //Chamando método morrendo ao sair
+        MorrendoAoSair();
+
+        
     }
 
     // Criando Método Subir
@@ -31,6 +39,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.velocity = Vector2.up * velocidade;
+
+            // Instanciando o puff
+            // Salvando a instância do puff em um variável
+            GameObject puf = Instantiate(puff, transform.position, Quaternion.identity);
+
+            // Destruindo o puff após 0.5 segundos
+            Destroy(puf, 0.5f);
         }
     }
 
@@ -42,19 +57,34 @@ public class PlayerController : MonoBehaviour
             // Travando a velocidade
             rb.velocity = Vector2.down * velocidade;
         }
+
+   
+
     }
 
+    private void MorrendoAoSair()
+    {
+        // Verificando se o jogador saiu da tela
+        if (transform.position.y > 5f || transform.position.y < -5f)
+        {
+            // Reiniciando o jogo
+            SceneManager.LoadScene("Inicio");
+        }
+    }
+
+
     //Colisão
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         // Verificando se colidiu com obstáculo
         if (collision.gameObject.CompareTag("Obstáculo"))
         {
             // Reiniciando o jogo
-            SceneManager.LoadScene("");
-            Debug.Log("Colidiu com obstáculo, reiniciando o jogo");
+            SceneManager.LoadScene("Inicio");
+           
 
         }
+       
     }
 }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using TMPro;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,16 +27,31 @@ public class GameController : MonoBehaviour
 
     //Tempo mim e max
     [SerializeField] private float tempoMin = 1f;
-    [SerializeField] private float tempoMax = 2f;
+    [SerializeField] private float tempoMax = 3f;
 
     //Score
     private float score = 0f;
 
     //Variavel dos pontos do canvas
-    [SerializeField] private Text CanvasScore;
+    [SerializeField] private TextMeshProUGUI CanvasScore;
+
+    //Variável de Level
+    private int level = 1;
+
+    // Variável pra ganhar level
+    [SerializeField] private float proximoLevel = 10f;
+
+    //Variável para o canvas de level
+    [SerializeField] private TextMeshProUGUI CanvasLevel;
+
+    //musica
+    [SerializeField] private AudioClip musica;
+
+    //Camra pos
+    private Vector3 camerapos;
     void Start()
     {
-      
+     camerapos = Camera.main.transform.position;
     }
 
     // Update is called once per frame
@@ -43,7 +59,7 @@ public class GameController : MonoBehaviour
     {
         CriandoObstaculo();
         Score();
-        
+        Level();
     }
 
     private void CriandoObstaculo()
@@ -54,19 +70,41 @@ public class GameController : MonoBehaviour
             Instantiate(obstaculo, posicao, Quaternion.identity);
 
             //Resetando o Timer
-            Timer = Random.Range(tempoMin, tempoMax);
+            Timer = UnityEngine.Random.Range(tempoMin / level, tempoMax);
 
-            posicao.y = Random.Range(posmin, posmax);
+            posicao.y = UnityEngine.Random.Range(posmin, posmax);
         }
     }
 
     private void Score()
     {
+
         //Pontos
-        
+        score += Time.deltaTime;
 
         //Passando o score para o canvas
-        
+        CanvasScore.text = math.round(score).ToString();
 
+
+    }
+
+    private void Level()
+    {
+        if (score > proximoLevel)
+        {
+            level++;                    
+            proximoLevel = proximoLevel * 2;
+            Debug.Log(level);
+            AudioSource.PlayClipAtPoint(musica, camerapos);
+
+        }
+
+        //Passando o level para o canvas
+        CanvasLevel.text = math.round(level).ToString();
+    }
+
+    public int RetorneLevel()
+    {
+        return level;
     }
 }
