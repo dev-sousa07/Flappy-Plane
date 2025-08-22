@@ -13,13 +13,13 @@ public class GameController : MonoBehaviour
     //time
     [SerializeField] private float Timer = 1f;
 
-    //obstáculo
+    //obstï¿½culo
     [SerializeField] private GameObject obstaculo;
 
-    //Posição do obstáculo para criar
+    //Posiï¿½ï¿½o do obstï¿½culo para criar
     [SerializeField] private Vector3 posicao;
 
-    //Pos min e max para o obstáculo
+    //Pos min e max para o obstï¿½culo
     [SerializeField] private float posmin = -0.25f;
     [SerializeField] private float posmax = 3.5f;
 
@@ -35,13 +35,13 @@ public class GameController : MonoBehaviour
     //Variavel dos pontos do canvas
     [SerializeField] private TextMeshProUGUI CanvasScore;
 
-    //Variável de Level
+    //Variï¿½vel de Level
     private int level = 1;
 
-    // Variável pra ganhar level
+    // Variï¿½vel pra ganhar level
     [SerializeField] private float proximoLevel = 10f;
 
-    //Variável para o canvas de level
+    //Variï¿½vel para o canvas de level
     [SerializeField] private TextMeshProUGUI CanvasLevel;
 
     //musica
@@ -107,4 +107,5 @@ public class GameController : MonoBehaviour
     {
         return level;
     }
+    
 }
