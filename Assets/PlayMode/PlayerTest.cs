@@ -76,5 +76,17 @@ public class PlayerPlayModeTests
         yield return null;
     }
 
-
+    [UnityTest]
+    public IEnumerator MovimentoDoObstaculo()
+    {
+        // Define a posição inicial do obstáculo
+        obstaculo.transform.position = new Vector3(5, 0, 0);
+        // Move o obstáculo para a esquerda
+        float velocidade = 2f;
+        float deltaTime = Time.deltaTime;
+        obstaculo.transform.Translate(Vector3.left * velocidade * deltaTime);
+        // Verifica se o obstáculo se moveu
+        Assert.Less(obstaculo.transform.position.x, 5, "O obstáculo não se moveu para a esquerda.");
+        yield return null;
+    }
 }
