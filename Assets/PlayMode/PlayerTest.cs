@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-public class PlayerPlayModeTests 
+public class PlayerPlayModeTests
 {
     private GameObject player;
     private PlayerController controller;
@@ -21,6 +21,12 @@ public class PlayerPlayModeTests
         // Adiciona o PlayerController
         controller = player.AddComponent<PlayerController>();
 
+        // Adiciona Rigidbody2D player
+        rb = player.AddComponent<Rigidbody2D>();
+
+        // Atribui ao PlayerController (se ele usar rb público)
+        controller.rb = rb;
+
         // Criar obsatáculo temporário
         obstaculo = new GameObject("Obstaculo");
 
@@ -28,12 +34,10 @@ public class PlayerPlayModeTests
         col = obstaculo.AddComponent<BoxCollider2D>();
         col.isTrigger = true;
 
-        // Adiciona Rigidbody2D 
-        rb = player.AddComponent<Rigidbody2D>();
+        // Rigidbody2D Obstáculo
+        Rigidbody2D rbObstaculo = obstaculo.AddComponent<Rigidbody2D>();
+        rbObstaculo.isKinematic = true;
 
-
-        // Atribui ao PlayerController (se ele usar rb público)
-        controller.rb = rb;
     }
 
     [TearDown]
@@ -41,13 +45,14 @@ public class PlayerPlayModeTests
     {
         // Destrói o player após cada teste
         Object.Destroy(player);
+        Object.Destroy(obstaculo);
     }
 
     [UnityTest]
-    
+
     public IEnumerator CenaExiste()
     {
-      // Carrega a cena
+        // Carrega a cena
         SceneManager.LoadScene("Jogo");
 
         // Espera até a cena ser a ativa
@@ -70,23 +75,59 @@ public class PlayerPlayModeTests
     }
 
     [UnityTest]
+    public IEnumerator PlayerPula()
+    {
+        // Reseta a velocidade
+        rb.velocity = Vector2.zero;
+
+        // Chama o método direto, sem depender do Input
+        controller.Pular();
+
+        // Espera a física atualizar
+        yield return new WaitForFixedUpdate();
+
+        // Verifica se a velocidade Y aumentou
+        Assert.Greater(rb.velocity.y, 0, "O Player não pulou.");
+    }
+
+
+    [UnityTest]
+    public IEnumerator PlayerMorre()
+    {
+        // Simula a morte do player
+        controller.MorrendoAoSair();
+        // Espera um frame
+        yield return null;
+        // Verifica se o jogo reiniciou (a cena foi recarregada)
+        Assert.AreEqual("Jogo", SceneManager.GetActiveScene().name, "A cena não foi reiniciada após a morte do Player.");
+    }
+
+   
+    [UnityTest]
     public IEnumerator ObstaculoExiste()
     {
        Assert.IsNotNull(obstaculo, "O Obstáculo não foi encontrado na cena.");
         yield return null;
     }
 
+
     [UnityTest]
-    public IEnumerator MovimentoDoObstaculo()
+    public IEnumerator ColisaoComObstaculo()
     {
-        // Define a posição inicial do obstáculo
-        obstaculo.transform.position = new Vector3(5, 0, 0);
-        // Move o obstáculo para a esquerda
-        float velocidade = 2f;
-        float deltaTime = Time.deltaTime;
-        obstaculo.transform.Translate(Vector3.left * velocidade * deltaTime);
-        // Verifica se o obstáculo se moveu
-        Assert.Less(obstaculo.transform.position.x, 5, "O obstáculo não se moveu para a esquerda.");
-        yield return null;
+        // Adiciona colisor ao Player
+        var playerCollider = player.AddComponent<BoxCollider2D>();
+        playerCollider.isTrigger = true;
+
+
+        // Posiciona os dois para colidirem
+        player.transform.position = Vector3.zero;
+        obstaculo.transform.position = Vector3.zero;
+
+        // Espera a física rodar
+        yield return new WaitForFixedUpdate();
+
+        // Trocar de cena
+        Assert.AreEqual("Jogo", SceneManager.GetActiveScene().name);
     }
+
 }

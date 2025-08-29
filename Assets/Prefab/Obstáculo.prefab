@@ -46,9 +46,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 929fbb762a044534d9aa8aaba0993aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Timer: 1
+  obstaculo: {fileID: 6150835541840648294}
+  posicao: {x: 0, y: 0, z: 0}
+  posmin: -0.25
+  posmax: 3.5
+  tempoMin: 1
+  tempoMax: 3
   velocidade: 5
   eu: {fileID: 6150835541840648294}
   game: {fileID: 0}
+  level: 1
 --- !u!1 &7154389045002510509
 GameObject:
   m_ObjectHideFlags: 0

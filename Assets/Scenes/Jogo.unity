@@ -322,11 +322,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &546727011 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6150835541840648294, guid: f27eecc2b1469114bb483ab3f4f23323, type: 3}
-  m_PrefabInstance: {fileID: 1047393859}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1047393859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -379,6 +374,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 804042009865912217, guid: f27eecc2b1469114bb483ab3f4f23323, type: 3}
+      propertyPath: obstaculo
+      value: 
+      objectReference: {fileID: 6150835541840648294, guid: f27eecc2b1469114bb483ab3f4f23323, type: 3}
     - target: {fileID: 3984456043774472933, guid: f27eecc2b1469114bb483ab3f4f23323, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -440,21 +439,6 @@ MonoBehaviour:
   proximoLevel: 10
   CanvasLevel: {fileID: 385080298}
   musica: {fileID: 8300000, guid: f9fc51f59c215344ca1e83e412bb78ee, type: 3}
---- !u!114 &1820981983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1820981979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929fbb762a044534d9aa8aaba0993aca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocidade: 5
-  eu: {fileID: 546727011}
-  game: {fileID: 1820981982}
 --- !u!114 &1901696273 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7976428770819249509, guid: 1dd0bd806fcf35f47b6f4d7573c8c1cf, type: 3}
@@ -651,9 +635,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2324241909425652100, guid: 81d759d9f3030a844abea90de7231cdc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1820981982}
-    - targetCorrespondingSourceObject: {fileID: 2324241909425652100, guid: 81d759d9f3030a844abea90de7231cdc, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1820981983}
   m_SourcePrefab: {fileID: 100100000, guid: 81d759d9f3030a844abea90de7231cdc, type: 3}
 --- !u!1001 &7874873628047291195
 PrefabInstance:
